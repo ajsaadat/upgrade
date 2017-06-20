@@ -1,13 +1,17 @@
 package com.upgrade.operation;
 
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.upgrade.bean.Reservation;
 import com.upgrade.exception.CancellationException;
 import com.upgrade.exception.ReservationNotFoundException;
 
-public class DeleteReservationFactory extends ReservationFactory {
+public class CancelReservationFactory extends ReservationFactory {
 
 	
-	
+	@Transactional(isolation=Isolation.READ_COMMITTED, propagation=Propagation.REQUIRES_NEW)
 	public boolean cancelReservation(String id) throws CancellationException{
 		if(id == null || id.isEmpty()){
 			throw new IllegalArgumentException("Reservation id can not be null or empty.") ;

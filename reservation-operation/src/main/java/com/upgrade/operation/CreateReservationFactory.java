@@ -3,6 +3,10 @@ package com.upgrade.operation;
 import java.sql.Date;
 import java.util.List;
 
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.upgrade.bean.Reservation;
 import com.upgrade.bean.Timeslot;
 import com.upgrade.bean.User;
@@ -21,6 +25,7 @@ public class CreateReservationFactory extends ReservationFactory{
 		this.validator = validator ; 
 	}
 
+	@Transactional(isolation=Isolation.READ_COMMITTED, propagation=Propagation.REQUIRES_NEW)
 	public Reservation createReservation(Date startDate, Date endDate, 
 			String firstName, String lastName, String email) throws ValidationException{
 		Timeslot timeslot = new Timeslot(startDate, endDate) ; 
@@ -38,6 +43,7 @@ public class CreateReservationFactory extends ReservationFactory{
 
 	}
 
+	@Transactional(isolation=Isolation.READ_COMMITTED, propagation=Propagation.REQUIRES_NEW)
 	public Reservation createReservation(Reservation reservation) throws ValidationException{
 		boolean valid = validator.validate(reservation) ;
 		if(valid){
