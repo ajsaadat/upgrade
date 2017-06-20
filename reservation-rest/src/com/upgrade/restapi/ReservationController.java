@@ -26,6 +26,11 @@ public class ReservationController {
 	private CancelReservationFactory cFactory ; 
 	private UpdateReservationFactory uFactory ; 
 	
+	/*
+	 * check this document for passing complex object in jsob in http request
+	 * https://stackoverflow.com/questions/38237217/spring-resttemplate-passing-in-object-parameters-in-get
+	 */
+	
 	@RequestMapping(path="/reservation", method= RequestMethod.POST)
 	public String createReservation(@RequestParam Reservation reservation){
 		IReservationValidator rValidator = new ReservationValidator() ;

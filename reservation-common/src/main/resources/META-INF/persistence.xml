@@ -11,5 +11,6 @@
 			<property name="hibernate.cache.use_minimal_puts" value="true" />
 			<property name="hibernate.default_batch_fetch_size" value="64" />
 			<property name="hibernate.max_fetch_depth" value="1" />
+			<property name="hibernate.hbm2ddl.auto" value="update"/>
 		</properties>
 	</persistence-unit>
