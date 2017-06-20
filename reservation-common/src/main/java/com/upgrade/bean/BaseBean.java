@@ -6,7 +6,7 @@ import javax.persistence.Version;
 @Entity
 public class BaseBean {
 	@Version
-	private int version ;
+	protected int version ;
 
 	public int getVersion() {
 		return version;

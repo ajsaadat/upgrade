@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="1.0"
+	xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd">
+	<persistence-unit name="upgrade-data">
+		<jta-data-source>java:/UPDS</jta-data-source>
+		<properties>
+			<property name="dialect" value="org.hibernate.dialect.Oracle10Dialect" />
+			<property name="jboss.entity.manager.jndi.name" value="java:/TWEM" />
+			<property name="hibernate.cache.use_query_cache" value="true" />
+			<property name="hibernate.cache.use_minimal_puts" value="true" />
+			<property name="hibernate.default_batch_fetch_size" value="64" />
+			<property name="hibernate.max_fetch_depth" value="1" />
+		</properties>
+	</persistence-unit>

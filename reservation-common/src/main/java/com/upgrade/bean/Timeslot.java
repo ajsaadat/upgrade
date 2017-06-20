@@ -7,16 +7,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
-import org.hibernate.annotations.NamedQuery;
-
 @Entity
-@NamedQuery(name="allTimeslots", query="")
 public class Timeslot extends BaseBean {
 
 	@Id
 	@GeneratedValue(generator = "assigned")
 	@Column(nullable = false)
-	private String id ; 
+	private String id ;
 	private Date startDate ; 
 	private Date endDate ;
 	
@@ -65,12 +62,11 @@ public class Timeslot extends BaseBean {
 	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
 	}
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
+	
 	@Override
 	public String toString() {
-		return "Timeslot [id=" + id + ", startDate=" + startDate + ", duration=" + endDate + "]";
+		return "Timeslot [id=" + id + ", version=" + version + ", startDate=" + startDate + ", endDate=" + endDate
+				+ "]";
 	} 
 	
 	
