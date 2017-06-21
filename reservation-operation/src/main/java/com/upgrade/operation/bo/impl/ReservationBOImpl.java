@@ -7,7 +7,7 @@ import com.upgrade.bean.Reservation;
 import com.upgrade.operation.bo.ReservationBO;
 import com.upgrade.operation.dao.IReservationDAO;
 
-@Service("reservationBO")
+@Service("ReservationBO")
 public class ReservationBOImpl implements ReservationBO {
 	
 	@Autowired

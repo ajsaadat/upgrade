@@ -5,39 +5,36 @@
 	<groupId>upgrade</groupId>
 	<artifactId>rest-api</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
 
-	<name>rest-api</name>
+	<name>upgrade</name>
 	<url>http://maven.apache.org</url>
 
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<java.version>1.8</java.version>
-	</properties>
-
-	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>1.4.2.RELEASE</version>
-	</parent>
+	<!-- <parent> <groupId>org.springframework.boot</groupId> <artifactId>spring-boot-starter-parent</artifactId> 
+		<version>1.5.4.RELEASE</version> </parent> -->
 
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+			<version>1.5.4.RELEASE</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.hibernate</groupId>
+					<artifactId>hibernate-validator</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
-
-		<!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpcore-ab -->
 		<dependency>
-			<groupId>org.apache.httpcomponents</groupId>
-			<artifactId>httpcore-ab</artifactId>
-			<version>4.4.5</version>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<version>1.5.4.RELEASE</version>
+			<scope>test</scope>
 		</dependency>
-
 		<dependency>
-			<groupId>org.testng</groupId>
-			<artifactId>testng</artifactId>
-			<version>6.3.1</version>
+			<groupId>com.jayway.jsonpath</groupId>
+			<artifactId>json-path</artifactId>
+			<version>2.2.0</version>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>upgrade</groupId>
@@ -51,30 +48,34 @@
 		</dependency>
 	</dependencies>
 
-	<build>
-		<sourceDirectory>src</sourceDirectory>
-		<testSourceDirectory>tests</testSourceDirectory>
-		<plugins>
-			<plugin>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<springframework.version>4.3.1.RELEASE</springframework.version>
+		<jackson.version>2.7.5</jackson.version>
+		<java.version>1.8</java.version>
+	</properties>
 
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-surefire-plugin</artifactId>
-				<configuration>
-					<!-- Suite testng xml file to consider for test execution -->
-					<suiteXmlFiles>
-						<suiteXmlFile>tests/testng.xml</suiteXmlFile>
-					</suiteXmlFiles>
-				</configuration>
-			</plugin>
-			<!-- trying to configure load testing framework within maven -->
-			<plugin>
-				<groupId>org.apache.httpcomponents</groupId>
-				<artifactId>httpcore-ab</artifactId>
-			</plugin>
+	<build>
+		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 		</plugins>
 	</build>
+
+	<!-- <repositories> <repository> <id>spring-releases</id> <url>https://repo.spring.io/libs-release</url> 
+		</repository> </repositories> <pluginRepositories> <pluginRepository> <id>spring-releases</id> 
+		<url>https://repo.spring.io/libs-release</url> </pluginRepository> </pluginRepositories> -->
+
+	<!-- <build> <plugins> <plugin> <artifactId>maven-ear-plugin</artifactId> 
+		<version>2.10</version> <configuration> <earSourceDirectory>${basedir}/target/all-resources</earSourceDirectory> 
+		<defaultLibBundleDir>lib</defaultLibBundleDir> <modules> <jarModule> <groupId>upgrade</groupId> 
+		<artifactId>reservation-common</artifactId> <bundleFileName>reservation-common.jar</bundleFileName> 
+		<includeInApplicationXml>true</includeInApplicationXml> </jarModule> <jarModule> 
+		<groupId>upgrade</groupId> <artifactId>reservation-operation</artifactId> 
+		<bundleFileName>reservation-operation.jar</bundleFileName> <includeInApplicationXml>true</includeInApplicationXml> 
+		</jarModule> </modules> <displayName>Upgrade Reservation</displayName> <generateApplicationXml>true</generateApplicationXml> 
+		</configuration> </plugin> </plugins> <finalName>UpgradeReservation</finalName> 
+		</build> -->
 </project>

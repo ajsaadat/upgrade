@@ -8,7 +8,7 @@ import com.upgrade.bean.Reservation;
 import com.upgrade.operation.dao.IReservationDAO;
 import com.upgrade.util.CustomHibernateDaoSupport;
 
-@Repository("reservationDAO")
+@Repository("ReservationDAO")
 public class ReservationDAO extends CustomHibernateDaoSupport implements IReservationDAO {
 
 	public void save(Reservation reservation) {

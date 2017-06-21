@@ -3,7 +3,6 @@ package com.upgrade.bean;
 import javax.persistence.Entity;
 import javax.persistence.Version;
 
-@Entity
 public class BaseBean {
 	@Version
 	protected int version ;

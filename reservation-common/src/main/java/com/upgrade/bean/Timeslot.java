@@ -5,17 +5,22 @@ import java.sql.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
 public class Timeslot extends BaseBean {
 
 	@Id
-	@GeneratedValue(generator = "assigned")
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(nullable = false)
 	private String id ;
 	private Date startDate ; 
 	private Date endDate ;
+	
+	public Timeslot(){
+		
+	}
 	
 	public Timeslot(Date startDate, Date endDate){
 		if(startDate == null){
