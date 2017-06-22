@@ -24,7 +24,7 @@ public class CreateReservationFactoryTest {
 		IReservationValidator rValidator = new ReservationValidator() ; 
 		CreateReservationFactory crFactory = new CreateReservationFactory(rValidator) ;
 		User user = new User("A", "B", "C") ;
-		Timeslot timeslot = new Timeslot(new Date(System.currentTimeMillis()), new Date(System.currentTimeMillis() - TimeUnit.MILLISECONDS.convert(1, TimeUnit.DAYS))) ;
+		Timeslot timeslot = new Timeslot(new Date(System.currentTimeMillis()+ TimeUnit.MILLISECONDS.convert(2, TimeUnit.DAYS)), new Date(System.currentTimeMillis() + TimeUnit.MILLISECONDS.convert(3, TimeUnit.DAYS))) ;
 		Reservation reservation = new Reservation(user, timeslot) ;
 		crFactory.createReservation(reservation) ; 
 	}

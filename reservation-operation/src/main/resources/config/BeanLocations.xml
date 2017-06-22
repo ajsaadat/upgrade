@@ -13,7 +13,8 @@ http://www.springframework.org/schema/context/spring-context-2.5.xsd
 	<!-- Auto scan the components -->
 	<context:component-scan
 		base-package="com.upgrade" />
-		
+	
+	<import resource="../database/Hibernate.xml"/>	
 	
 	<bean id="dataSource"
         class="org.springframework.jdbc.datasource.DriverManagerDataSource">
@@ -22,11 +23,14 @@ http://www.springframework.org/schema/context/spring-context-2.5.xsd
         <property name="username" value="root" />
         <property name="password" value="mnrpass" />
     </bean>
-    <bean id="sessionFactory"
+    <!-- <bean id="sessionFactory"
         class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
         <property name="dataSource" ref="dataSource" />
-     <!--    <property name="configLocation" value="classpath:hibernate.cfg.xml" /> -->
-    </bean>
+        <property name="configLocation" value="classpath:hibernate.cfg.xml" />
+    </bean> -->
+    <bean id="ReservationBO" class="com.upgrade.operation.bo.impl.ReservationBOImpl"/>
+    <bean id="TimeslotBO" class="com.upgrade.operation.bo.impl.TimeslotBOImpl"/>
+    <bean id="TimeslotDAO" class="com.upgrade.operation.dao.impl.TimeslotDAO"/>
     <bean id="ReservationDAO" class="com.upgrade.operation.dao.impl.ReservationDAO">
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>

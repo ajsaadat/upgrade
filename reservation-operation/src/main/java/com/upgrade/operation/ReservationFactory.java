@@ -14,13 +14,13 @@ public abstract class ReservationFactory {
 	
 	public ReservationFactory(){
 		appContext =
-		    	  new ClassPathXmlApplicationContext("spring/config/BeanLocations.xml");
+		    	  new ClassPathXmlApplicationContext("config/BeanLocations.xml");
 		reservationBO = getReservationDAO() ; 
 		timeslotBO = getTimeslotBO() ;
 	}
 	
 	private ReservationBO getReservationDAO(){
-		return (ReservationBO)appContext.getBean("ReserverationBO") ;
+		return (ReservationBO)appContext.getBean("ReservationBO") ;
 	}
 	
 	private TimeslotBO getTimeslotBO(){
