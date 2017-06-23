@@ -38,7 +38,7 @@ public class ReservationController {
 		
 		try {
 			Reservation confirmedReservation = rFactory.createReservation(reservation) ;
-			return confirmedReservation.getId() ; 
+			return confirmedReservation.getId().toString() ; 
 			
 		} catch (ValidationException e) {
 			throw new RuntimeException(e) ;
@@ -46,18 +46,18 @@ public class ReservationController {
 	}
 	
 	@RequestMapping(path="/reservation", method= RequestMethod.PUT)
-	public String updateReservation(@RequestParam Reservation newReservation, @RequestParam String reservationID){
+	public String updateReservation(@RequestParam Reservation newReservation, @RequestParam long reservationID){
 		uFactory = new UpdateReservationFactory() ; 
 		try {
 			Reservation reservation = uFactory.updateReservation(reservationID, newReservation);
-			return reservation.getId() ; 
+			return reservation.getId().toString() ; 
 		} catch (ReservationNotFoundException e) {
 			throw new RuntimeException(e) ;
 		}
 	}
 	
 	@RequestMapping(path="/reservation", method= RequestMethod.DELETE)
-	public boolean cancelReservation(@RequestParam String reservationID){
+	public boolean cancelReservation(@RequestParam long reservationID){
 		cFactory = new CancelReservationFactory() ; 
 		try {
 			cFactory.cancelReservation(reservationID) ;

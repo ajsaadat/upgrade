@@ -28,7 +28,7 @@ public class ReservationBOImpl implements ReservationBO {
 
 	}
 
-	public Reservation findByID(String reservatioID) {
+	public Reservation findByID(long reservatioID) {
 		return reservatioDAO.findByID(reservatioID) ;
 	}
 

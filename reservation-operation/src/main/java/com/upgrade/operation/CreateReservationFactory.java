@@ -43,7 +43,7 @@ public class CreateReservationFactory extends ReservationFactory{
 
 	}
 
-	@Transactional(isolation=Isolation.READ_COMMITTED, propagation=Propagation.REQUIRES_NEW)
+	@Transactional(isolation=Isolation.DEFAULT, propagation=Propagation.REQUIRES_NEW)
 	public Reservation createReservation(Reservation reservation) throws ValidationException{
 		boolean valid = validator.validate(reservation) ;
 		if(valid){

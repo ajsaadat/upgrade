@@ -6,5 +6,5 @@ public interface ReservationBO {
 	public void save(Reservation reservation);
 	public void update(Reservation reservation);
 	public void delete(Reservation reservation);
-	public Reservation findByID(String reservatioID);
+	public Reservation findByID(long reservatioID);
 }

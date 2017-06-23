@@ -5,10 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.testng.annotations.Test;
 
 import com.upgrade.bean.Reservation;
 import com.upgrade.bean.Timeslot;
@@ -18,7 +16,6 @@ import com.upgrade.operation.validator.IReservationValidator;
 import com.upgrade.operation.validator.impl.ReservationValidator;
 
 
-@RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:config/BeanLocations.xml")
 public class CreateReservationFactoryTest {
 	
@@ -101,9 +98,11 @@ public class CreateReservationFactoryTest {
 		crFactory.createReservation(reservation) ; 
 	}
 	
-	@Test
+	@Test(threadPoolSize=500, invocationCount=500)
 	public void createConcurrentReservationTest() throws ValidationException{
-		List<ConcurrentReservation> reservations = new ArrayList<>() ; 
+		IReservationValidator rValidator = new ReservationValidator() ; 
+		CreateReservationFactory crFactory = new CreateReservationFactory(rValidator) ;
+		List<Reservation> reservations = new ArrayList<Reservation>() ; 
 		
 		User user = new User("A", "B", "C") ;
 		Date startDate = new Date(System.currentTimeMillis()+ TimeUnit.MILLISECONDS.convert(2, TimeUnit.DAYS)) ;
@@ -111,34 +110,18 @@ public class CreateReservationFactoryTest {
 		
 		Timeslot timeslot = new Timeslot(startDate, endDate) ;
 		Reservation reservation = new Reservation(user, timeslot) ;
-		reservations.add(new ConcurrentReservation(reservation)) ;
-		reservations.add(new ConcurrentReservation(reservation)) ;
+		reservations.add(reservation) ;
 		
-		for(ConcurrentReservation res : reservations){
-			Thread t = new Thread(res) ;
-			t.start();
+		user = new User("d", "e", "f") ;
+		startDate = new Date(System.currentTimeMillis()+ TimeUnit.MILLISECONDS.convert(8, TimeUnit.DAYS)) ;
+		endDate = new Date(System.currentTimeMillis() + TimeUnit.MILLISECONDS.convert(9, TimeUnit.DAYS)) ;
+		timeslot = new Timeslot(startDate, endDate) ;
+		Reservation secondReservation = new Reservation(user, timeslot) ; 
+		reservations.add(secondReservation) ;
+		for(Reservation res : reservations){
+			crFactory.createReservation(res) ;
 		}
-		
-		
-		
-		
-		
-	}
-	
-	private class ConcurrentReservation implements Runnable{
-		private Reservation reservation ; 
-		public ConcurrentReservation(Reservation reservation){
-			this.reservation = reservation ; 
-		}
-		public void run() {
-			IReservationValidator rValidator = new ReservationValidator() ; 
-			CreateReservationFactory crFactory = new CreateReservationFactory(rValidator) ;
-			try {
-				crFactory.createReservation(reservation) ;
-			} catch (ValidationException e) {
-				e.printStackTrace();
-			} 
-		}
+ 
 		
 	}
 }

@@ -8,16 +8,19 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Version;
 @Entity
-@Table(name="Timeslot")
-public class Timeslot extends BaseBean {
+@Table(name="timeslot")
+public class Timeslot  {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(nullable = false)
-	private String id ;
+	private Long id ;
 	private Date startDate ; 
 	private Date endDate ;
+	@Version
+	protected int version ;
 	
 	public Timeslot(){
 		
@@ -35,13 +38,13 @@ public class Timeslot extends BaseBean {
 	/**
 	 * @return the id
 	 */
-	public String getId() {
+	public long getId() {
 		return id;
 	}
 	/**
 	 * @param id the id to set
 	 */
-	public void setId(String id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 	/**
@@ -69,9 +72,17 @@ public class Timeslot extends BaseBean {
 		this.endDate = endDate;
 	}
 	
+	public int getVersion() {
+		return version;
+	}
+
+	public void setVersion(int version) {
+		this.version = version;
+	}
+	
 	@Override
 	public String toString() {
-		return "Timeslot [id=" + id + ", version=" + version + ", startDate=" + startDate + ", endDate=" + endDate
+		return "Timeslot [id=" + id + ", startDate=" + startDate + ", endDate=" + endDate + ", version=" + version
 				+ "]";
 	} 
 	

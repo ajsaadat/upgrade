@@ -27,11 +27,15 @@ public class ReservationDAO extends CustomHibernateDaoSupport implements IReserv
 	}
 
 	@SuppressWarnings("rawtypes")
-	public Reservation findByID(String reservationID) {
+	public Reservation findByID(long reservationID) {
 		List list = getHibernateTemplate().find(
-                "from reservation where id=?" , reservationID
-           );
-	return (Reservation)list.get(0);
+				"from Reservation where id=?" , reservationID
+				);
+		if(list == null || list.isEmpty()){
+			return null ; 
+		}else{
+			return (Reservation)list.get(0);
+		}
 
 	}
 

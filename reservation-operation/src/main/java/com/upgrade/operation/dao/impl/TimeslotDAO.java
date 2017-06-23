@@ -10,9 +10,10 @@ import com.upgrade.util.CustomHibernateDaoSupport;
 public class TimeslotDAO extends CustomHibernateDaoSupport implements ITimeslotDAO {
 	public List<Timeslot> findByRange(Date startTime, Date endTime) {
 		@SuppressWarnings("unchecked")
+		
 		List<Timeslot> list = (List<Timeslot>)getHibernateTemplate().find(
-                "select t from timeslot where (startDate between :startTime and :endTime)"
-                + "or (endTime between :startTime and :endTime) " , new Object []{startTime, endTime}
+                "select t from Timeslot t where (t.startDate between ? and ?)"
+                + "or (t.endDate between ? and ?) " , new Object []{startTime, endTime, startTime, endTime}
            );
 		
 		return list ; 

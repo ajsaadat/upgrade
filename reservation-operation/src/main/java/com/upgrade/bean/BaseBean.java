@@ -1,6 +1,5 @@
 package com.upgrade.bean;
 
-import javax.persistence.Entity;
 import javax.persistence.Version;
 
 public class BaseBean {

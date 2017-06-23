@@ -5,14 +5,18 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
+import javax.persistence.Table;
+import javax.persistence.Version;
+@Table(name="user")
 @Entity
-public class User extends BaseBean {
+public class User  {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(nullable = false)
-	private String id ; 
+	private long id ; 
+	@Version
+	protected int version ;
 	private String firstName ; 
 	private String lastName ; 
 	private String email ; 
@@ -37,13 +41,13 @@ public class User extends BaseBean {
 	/**
 	 * @return the id
 	 */
-	public String getId() {
+	public long getId() {
 		return id;
 	}
 	/**
 	 * @param id the id to set
 	 */
-	public void setId(String id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 	
@@ -84,12 +88,19 @@ public class User extends BaseBean {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
+	
+	public int getVersion() {
+		return version;
+	}
+
+	public void setVersion(int version) {
+		this.version = version;
+	}
+	
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email + "]";
+		return "User [id=" + id + ", version=" + version + ", firstName=" + firstName + ", lastName=" + lastName
+				+ ", email=" + email + "]";
 	} 
 	
 	

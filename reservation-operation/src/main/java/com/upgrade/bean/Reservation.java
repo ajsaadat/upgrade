@@ -1,19 +1,28 @@
 package com.upgrade.bean;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.persistence.Version;
+@Table(name="reservation")
 
-public class Reservation extends BaseBean{
+@Entity
+public class Reservation {
 
 	@Id
-	@GeneratedValue(generator = "assigned")
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(nullable = false)
-	private String id ; 
-	@OneToOne
+	private Long id ; 
+	@Version
+	protected int version ;
+	@OneToOne(cascade = {CascadeType.ALL})
 	private User user ; 
-	@OneToOne
+	@OneToOne(cascade = {CascadeType.ALL})
 	private Timeslot timeslot; 
 	private Status status ;
 	
@@ -25,13 +34,13 @@ public class Reservation extends BaseBean{
 	/**
 	 * @return the id
 	 */
-	public String getId() {
+	public Long getId() {
 		return id;
 	}
 	/**
 	 * @param id the id to set
 	 */
-	public void setId(String id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	/**
@@ -70,12 +79,20 @@ public class Reservation extends BaseBean{
 	public void setStatus(Status status) {
 		this.status = status;
 	}
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
+	
+	public int getVersion() {
+		return version;
+	}
+
+	public void setVersion(int version) {
+		this.version = version;
+	}
+
+	
 	@Override
 	public String toString() {
-		return "Reservation [id=" + id + ", user=" + user + ", timeslot=" + timeslot + ", status=" + status + "]";
+		return "Reservation [id=" + id + ", version=" + version + ", user=" + user + ", timeslot=" + timeslot
+				+ ", status=" + status + "]";
 	} 
 	
 	

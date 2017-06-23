@@ -3,9 +3,9 @@ package com.upgrade.operation;
 import java.sql.Date;
 import java.util.concurrent.TimeUnit;
 
-import org.junit.Before;
-import org.junit.Test;
 import org.mockito.Mockito;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
 
 import com.upgrade.bean.Reservation;
 import com.upgrade.bean.Timeslot;
@@ -17,7 +17,7 @@ public class UpdateReservationFactoryTest {
 
 	private UpdateReservationFactory urFactory ; 
 	
-	@Before
+	@BeforeClass
 	public void init(){
 		urFactory = new UpdateReservationFactory() ;
 		
@@ -33,7 +33,7 @@ public class UpdateReservationFactoryTest {
 		Reservation resevation = new Reservation(user, timeslot) ; 
 		
 		ReservationBO reserBO = Mockito.mock(ReservationBO.class) ;
-		Mockito.when(reserBO.findByID(Mockito.anyString())).thenReturn(resevation) ; 
+		Mockito.when(reserBO.findByID(Mockito.anyLong())).thenReturn(resevation) ; 
 		
 		user = new User("A", "B", "C") ;
 		startDate = new Date(System.currentTimeMillis()+ TimeUnit.MILLISECONDS.convert(2, TimeUnit.DAYS)) ;
@@ -42,6 +42,6 @@ public class UpdateReservationFactoryTest {
 		timeslot = new Timeslot(startDate, endDate) ;
 		Reservation replacementResevation = new Reservation(user, timeslot) ; 
 		
-		urFactory.updateReservation("1234", replacementResevation) ; 
+		urFactory.updateReservation(1234l, replacementResevation) ; 
 	}
 }

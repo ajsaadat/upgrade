@@ -10,19 +10,15 @@ import com.upgrade.exception.ReservationNotFoundException;
 public class UpdateReservationFactory extends ReservationFactory {
 
 	@Transactional(isolation=Isolation.READ_COMMITTED, propagation=Propagation.REQUIRES_NEW)
-	public Reservation updateReservation(String id, Reservation newReservation) throws ReservationNotFoundException  {
-		if(id == null || id.isEmpty()){
-			throw new IllegalArgumentException("Reservation id can not be null or empty.") ;
+	public Reservation updateReservation(long id, Reservation newReservation) throws ReservationNotFoundException  {
 
+		Reservation reservation = reservationBO.findByID(id) ;
+		if(reservation == null){
+			throw new ReservationNotFoundException("Reservation [" + id + "] does not exist") ;
 		}else{
-			Reservation reservation = reservationBO.findByID(id) ;
-			if(reservation == null){
-				throw new ReservationNotFoundException("Reservation [" + id + "] does not exist") ;
-			}else{
-				reservationBO.update(reservation);
-				return reservation ; 
+			reservationBO.update(reservation);
+			return reservation ; 
 
-			}
 		}
 	}
 }

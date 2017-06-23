@@ -12,5 +12,5 @@ public interface IReservationDAO {
 	@Transactional
 	public void delete(Reservation reservation);
 	@Transactional
-	public Reservation findByID(String reservationID);
+	public Reservation findByID(long reservationID);
 }

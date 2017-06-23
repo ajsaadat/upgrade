@@ -15,16 +15,16 @@ class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
        <props>
          <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
          <prop key="hibernate.show_sql">true</prop>
+         <prop key="hibernate.hbm2ddl.auto">update</prop>
        </props>
     </property>
-
-    <!-- <property name="annotatedClasses">
+    <property name="annotatedClasses">
 	<list>
-		<value>com.update.bean.Reservation</value>
-		<value>com.update.bean.Timeslot</value>
-		<value>com.update.bean.User</value>
+		<value>com.upgrade.bean.Reservation</value>
+		<value>com.upgrade.bean.Timeslot</value>
+		<value>com.upgrade.bean.User</value>
 	</list>
-    </property> -->
+   </property>
 
     </bean>
 </beans>
