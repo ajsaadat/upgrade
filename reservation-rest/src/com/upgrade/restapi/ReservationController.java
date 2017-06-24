@@ -4,6 +4,8 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,8 +22,10 @@ import com.upgrade.operation.validator.IReservationValidator;
 import com.upgrade.operation.validator.impl.ReservationValidator;
 
 @RestController
+@RequestMapping("/")
 public class ReservationController {
 
+	private SearchRespositoryFactory sFactory  ; 
 	private CreateReservationFactory rFactory ; 
 	private CancelReservationFactory cFactory ; 
 	private UpdateReservationFactory uFactory ; 
@@ -31,8 +35,8 @@ public class ReservationController {
 	 * https://stackoverflow.com/questions/38237217/spring-resttemplate-passing-in-object-parameters-in-get
 	 */
 	
-	@RequestMapping(path="/reservation", method= RequestMethod.POST)
-	public String createReservation(@RequestParam Reservation reservation){
+	@RequestMapping(path="/reservation" ,method= RequestMethod.POST)
+	public String createReservation(@RequestBody Reservation reservation){
 		IReservationValidator rValidator = new ReservationValidator() ;
 		rFactory = new CreateReservationFactory(rValidator) ;
 		
@@ -46,7 +50,7 @@ public class ReservationController {
 	}
 	
 	@RequestMapping(path="/reservation", method= RequestMethod.PUT)
-	public String updateReservation(@RequestParam Reservation newReservation, @RequestParam String reservationID){
+	public String updateReservation(@RequestBody Reservation newReservation, @RequestParam String reservationID){
 		uFactory = new UpdateReservationFactory() ; 
 		try {
 			Reservation reservation = uFactory.updateReservation(reservationID, newReservation);
@@ -56,7 +60,7 @@ public class ReservationController {
 		}
 	}
 	
-	@RequestMapping(path="/reservation", method= RequestMethod.DELETE)
+	@RequestMapping(method= RequestMethod.DELETE)
 	public boolean cancelReservation(@RequestParam String reservationID){
 		cFactory = new CancelReservationFactory() ; 
 		try {
@@ -68,9 +72,10 @@ public class ReservationController {
 	}
 	
 	@RequestMapping(path="/reservation", method= RequestMethod.GET)
-	public List<Reservation> getReservation(@RequestParam Date lowerBound, @RequestParam Date higherBound){
-		List<Reservation> reservations = new ArrayList<>() ; 
-		return reservations ; 
+	public List<Date> getReservation(@RequestParam Date lowerBound, @RequestParam Date higherBound){
+		sFactory = new SearchReservationFactory() ; 
+		return sFactory.getPossibleReservationDates(lowerBound, higherBound) ;
+		 
 	}
 	
 }
