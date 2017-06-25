@@ -7,10 +7,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Index;
 import javax.persistence.Table;
 import javax.persistence.Version;
 @Entity
-@Table(name="timeslot")
+@Table(name="timeslot", 
+indexes = { @Index(name = "timeslotIndex", columnList = "startDate,endDate,version") })
 public class Timeslot  {
 
 	@Id
@@ -56,6 +58,7 @@ public class Timeslot  {
 	/**
 	 * @param startDate the startDate to set
 	 */
+	@Column(unique=true)
 	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
 	}
@@ -68,6 +71,7 @@ public class Timeslot  {
 	/**
 	 * @param endDate the duration to set
 	 */
+	@Column(unique=true)
 	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
 	}

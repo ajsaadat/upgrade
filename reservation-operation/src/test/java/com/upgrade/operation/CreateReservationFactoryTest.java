@@ -98,13 +98,13 @@ public class CreateReservationFactoryTest {
 		crFactory.createReservation(reservation) ; 
 	}
 	
-	@Test(threadPoolSize=500, invocationCount=500)
+	@Test(threadPoolSize=100, invocationCount=100)
 	public void createConcurrentReservationTest() throws ValidationException{
 		IReservationValidator rValidator = new ReservationValidator() ; 
 		CreateReservationFactory crFactory = new CreateReservationFactory(rValidator) ;
 		List<Reservation> reservations = new ArrayList<Reservation>() ; 
 		
-		User user = new User("A", "B", "C") ;
+		User user = new User(System.currentTimeMillis() + "", "B", "C") ;
 		Date startDate = new Date(System.currentTimeMillis()+ TimeUnit.MILLISECONDS.convert(2, TimeUnit.DAYS)) ;
 		Date endDate = new Date(System.currentTimeMillis() + TimeUnit.MILLISECONDS.convert(3, TimeUnit.DAYS)) ; 
 		
@@ -112,12 +112,12 @@ public class CreateReservationFactoryTest {
 		Reservation reservation = new Reservation(user, timeslot) ;
 		reservations.add(reservation) ;
 		
-		user = new User("d", "e", "f") ;
+		/*user = new User("d", "e", "f") ;
 		startDate = new Date(System.currentTimeMillis()+ TimeUnit.MILLISECONDS.convert(8, TimeUnit.DAYS)) ;
 		endDate = new Date(System.currentTimeMillis() + TimeUnit.MILLISECONDS.convert(9, TimeUnit.DAYS)) ;
 		timeslot = new Timeslot(startDate, endDate) ;
 		Reservation secondReservation = new Reservation(user, timeslot) ; 
-		reservations.add(secondReservation) ;
+		reservations.add(secondReservation) ;*/
 		for(Reservation res : reservations){
 			crFactory.createReservation(res) ;
 		}
