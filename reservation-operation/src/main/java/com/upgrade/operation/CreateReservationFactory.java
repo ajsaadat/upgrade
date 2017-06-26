@@ -10,6 +10,8 @@ import com.upgrade.bean.Reservation;
 import com.upgrade.bean.Timeslot;
 import com.upgrade.exception.TimeslotAlreadyTakenException;
 import com.upgrade.exception.ValidationException;
+import com.upgrade.operation.cache.TimeslotCache;
+import com.upgrade.operation.cache.TimeslotCache.Status;
 import com.upgrade.operation.validator.IReservationValidator;
 /**
  * Responsible for creating a reservation. A reservation is created if
@@ -20,7 +22,7 @@ import com.upgrade.operation.validator.IReservationValidator;
 public class CreateReservationFactory extends ReservationFactory{
 
 	private IReservationValidator validator ; 
-
+	private TimeslotCache timeslotCache = TimeslotCache.getInstance(); 
 	public CreateReservationFactory(IReservationValidator validator){
 		if(validator == null){
 			throw new IllegalArgumentException("Validator can not be null.") ; 
@@ -36,13 +38,27 @@ public class CreateReservationFactory extends ReservationFactory{
 		boolean valid = validator.validate(reservation) ;
 		if(valid){
 			Timeslot timeslot = reservation.getTimeslot() ; 
-			List<Timeslot> timeslots = timeslotBO.findByRange(timeslot.getStartDate(), timeslot.getEndDate()) ;
-			if(timeslots.isEmpty()){
-				reservationBO.save(reservation);
-				return reservation ; 
-			}else{
-				throw new TimeslotAlreadyTakenException("Timeslot [" + timeslot + " has already been taken.") ; 
+			Status cacheStatus = timeslotCache.store(timeslot) ;
+			switch(cacheStatus){
+				case CONTINUE:{
+					List<Timeslot> timeslots = timeslotBO.findByRange(timeslot.getStartDate(), timeslot.getEndDate()) ;
+					if(timeslots.isEmpty()){
+						reservationBO.save(reservation);
+						return reservation ; 
+					}else{
+						throw new TimeslotAlreadyTakenException("Timeslot [" + timeslot + " has already been taken.") ; 
+					}
+				}
+				case DISCONTINUE:{
+					throw new TimeslotAlreadyTakenException("Timeslot [" + timeslot + " has already been taken.") ; 
+				}
+				case WAIT:
+				default:{
+					throw new TimeslotAlreadyTakenException("Timeslot [" + timeslot + " has already been taken.") ; 
+				}
+					
 			}
+			
 		}else{
 			throw new RuntimeException() ; 
 		}
