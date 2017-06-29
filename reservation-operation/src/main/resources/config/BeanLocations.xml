@@ -1,0 +1,42 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns:context="http://www.springframework.org/schema/context"
+xmlns:tx="http://www.springframework.org/schema/tx"
+xsi:schemaLocation="http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+http://www.springframework.org/schema/context
+http://www.springframework.org/schema/context/spring-context-2.5.xsd
+        http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.0.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+	<!-- Auto scan the components -->
+	<context:component-scan
+		base-package="com.upgrade" />
+	
+	<import resource="../database/Hibernate.xml"/>	
+	
+	<bean id="dataSource"
+        class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver" />
+        <property name="url" value="jdbc:mysql://localhost/test" />
+        <property name="username" value="root" />
+        <property name="password" value="77329413" />
+    </bean>
+    <!-- <bean id="sessionFactory"
+        class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <property name="configLocation" value="classpath:hibernate.cfg.xml" />
+    </bean> -->
+    <tx:annotation-driven/>
+    <bean id="ReservationBO" class="com.upgrade.operation.bo.impl.ReservationBOImpl"/>
+    <bean id="TimeslotBO" class="com.upgrade.operation.bo.impl.TimeslotBOImpl"/>
+    <bean id="TimeslotDAO" class="com.upgrade.operation.dao.impl.TimeslotDAO"/>
+    <bean id="ReservationDAO" class="com.upgrade.operation.dao.impl.ReservationDAO">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+    <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+</beans>
